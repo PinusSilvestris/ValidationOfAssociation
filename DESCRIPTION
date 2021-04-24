@@ -1,0 +1,27 @@
+Package: VoA
+Type: Package
+Title: Quantifying and visualizing associations between two variables
+Version: 0.0.0.1
+Date: 2021-04-24
+Authors@R: 
+    c(person(given = "Bogdan",
+           family = "Ćmiel",
+           role = c("aut"),
+           email = "cmielbog@wms.mat.agh.edu.pl"),
+      person(given = "Krzysztof",
+           family = "Suwada",
+           role = c("aut", "cre"),
+           email = "krzysztof.suwada@gmail.com"))
+Description: Quantifying and visualizing associations between two variables.
+License: TBD
+Imports: Rcpp (>= 1.0.6)
+LinkingTo: Rcpp, RcppArmadillo
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Suggests: 
+    testthat (>= 3.0.0),
+    ggplot2
+Config/testthat/edition: 3
+
