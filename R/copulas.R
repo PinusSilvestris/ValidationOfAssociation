@@ -35,7 +35,7 @@ calculate_copula_mc_grid <- function(X, Y, MC=100){
 
   g <- NULL
   K <- length(X)
-  pb <- txtProgressBar(min=0, max=MC, style=3)
+  #pb <- txtProgressBar(min=0, max=MC, style=3)
 
   for(i in 1:MC){
 
@@ -50,7 +50,7 @@ calculate_copula_mc_grid <- function(X, Y, MC=100){
     } else {
       g <- g+g_tmp
     }
-    setTxtProgressBar(pb, i)
+    #setTxtProgressBar(pb, i)
   }
 
   g <- g/MC

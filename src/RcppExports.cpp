@@ -6,6 +6,65 @@
 
 using namespace Rcpp;
 
+// seq_int
+arma::uvec seq_int(long int a, long int b);
+RcppExport SEXP _VoA_seq_int(SEXP aSEXP, SEXP bSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< long int >::type a(aSEXP);
+    Rcpp::traits::input_parameter< long int >::type b(bSEXP);
+    rcpp_result_gen = Rcpp::wrap(seq_int(a, b));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rnd_idx
+arma::uvec rnd_idx(int n);
+RcppExport SEXP _VoA_rnd_idx(SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(rnd_idx(n));
+    return rcpp_result_gen;
+END_RCPP
+}
+// bootstrap_samples
+std::vector<arma::uvec> bootstrap_samples(int n, int MC);
+RcppExport SEXP _VoA_bootstrap_samples(SEXP nSEXP, SEXP MCSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type MC(MCSEXP);
+    rcpp_result_gen = Rcpp::wrap(bootstrap_samples(n, MC));
+    return rcpp_result_gen;
+END_RCPP
+}
+// arma_copula_mc
+arma::mat arma_copula_mc(arma::vec Rx, arma::vec Ry, int MC, int t);
+RcppExport SEXP _VoA_arma_copula_mc(SEXP RxSEXP, SEXP RySEXP, SEXP MCSEXP, SEXP tSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::vec >::type Rx(RxSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type Ry(RySEXP);
+    Rcpp::traits::input_parameter< int >::type MC(MCSEXP);
+    Rcpp::traits::input_parameter< int >::type t(tSEXP);
+    rcpp_result_gen = Rcpp::wrap(arma_copula_mc(Rx, Ry, MC, t));
+    return rcpp_result_gen;
+END_RCPP
+}
+// omp2
+void omp2(int t);
+RcppExport SEXP _VoA_omp2(SEXP tSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type t(tSEXP);
+    omp2(t);
+    return R_NilValue;
+END_RCPP
+}
 // arma_copula
 arma::mat arma_copula(arma::vec Rx, arma::vec Ry);
 RcppExport SEXP _VoA_arma_copula(SEXP RxSEXP, SEXP RySEXP) {
@@ -18,56 +77,14 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpparma_hello_world
-arma::mat rcpparma_hello_world();
-RcppExport SEXP _VoA_rcpparma_hello_world() {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpparma_hello_world());
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_outerproduct
-arma::mat rcpparma_outerproduct(const arma::colvec& x);
-RcppExport SEXP _VoA_rcpparma_outerproduct(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_outerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_innerproduct
-double rcpparma_innerproduct(const arma::colvec& x);
-RcppExport SEXP _VoA_rcpparma_innerproduct(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_innerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_bothproducts
-Rcpp::List rcpparma_bothproducts(const arma::colvec& x);
-RcppExport SEXP _VoA_rcpparma_bothproducts(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_bothproducts(x));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_VoA_seq_int", (DL_FUNC) &_VoA_seq_int, 2},
+    {"_VoA_rnd_idx", (DL_FUNC) &_VoA_rnd_idx, 1},
+    {"_VoA_bootstrap_samples", (DL_FUNC) &_VoA_bootstrap_samples, 2},
+    {"_VoA_arma_copula_mc", (DL_FUNC) &_VoA_arma_copula_mc, 4},
+    {"_VoA_omp2", (DL_FUNC) &_VoA_omp2, 1},
     {"_VoA_arma_copula", (DL_FUNC) &_VoA_arma_copula, 2},
-    {"_VoA_rcpparma_hello_world", (DL_FUNC) &_VoA_rcpparma_hello_world, 0},
-    {"_VoA_rcpparma_outerproduct", (DL_FUNC) &_VoA_rcpparma_outerproduct, 1},
-    {"_VoA_rcpparma_innerproduct", (DL_FUNC) &_VoA_rcpparma_innerproduct, 1},
-    {"_VoA_rcpparma_bothproducts", (DL_FUNC) &_VoA_rcpparma_bothproducts, 1},
     {NULL, NULL, 0}
 };
 

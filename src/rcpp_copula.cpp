@@ -1,6 +1,6 @@
 // -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
 
-#include "RcppArmadillo.h"
+#include "rcpp_copula.h"
 // [[Rcpp::depends(RcppArmadillo)]]
 
 arma::vec swap_ranks(arma::vec R){
@@ -101,41 +101,4 @@ arma::mat arma_copula(arma::vec Rx, arma::vec Ry) {
     fill_matrix(n, KS, Ctabs21, true, false);
 
     return KS;
-}
-
-// [[Rcpp::export]]
-arma::mat rcpparma_hello_world() {
-    arma::mat m1 = arma::eye<arma::mat>(3, 3);
-    arma::mat m2 = arma::eye<arma::mat>(3, 3);
-
-    return m1 + 3 * (m1 + m2);
-}
-
-
-// another simple example: outer product of a vector,
-// returning a matrix
-//
-// [[Rcpp::export]]
-arma::mat rcpparma_outerproduct(const arma::colvec & x) {
-    arma::mat m = x * x.t();
-    return m;
-}
-
-// and the inner product returns a scalar
-//
-// [[Rcpp::export]]
-double rcpparma_innerproduct(const arma::colvec & x) {
-    double v = arma::as_scalar(x.t() * x);
-    return v;
-}
-
-
-// and we can use Rcpp::List to return both at the same time
-//
-// [[Rcpp::export]]
-Rcpp::List rcpparma_bothproducts(const arma::colvec & x) {
-    arma::mat op = x * x.t();
-    double    ip = arma::as_scalar(x.t() * x);
-    return Rcpp::List::create(Rcpp::Named("outer")=op,
-                              Rcpp::Named("inner")=ip);
 }
