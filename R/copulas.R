@@ -1,11 +1,11 @@
-#' Calculate copula based on single sample
+#' Calculates copula based on a given sample
 #'
-#' @description Greet a person and appropriately capitalize their name.
+#' @description Calculates copula based on a given sample.
 #'
-#' @param X Your name (character string; e.g. "john doe").
-#' @param Y Your name (character string; e.g. "john doe").
+#' @param X numerical vector with first random variable e.g. c(1.1, 2.2, 1.73).
+#' @param Y numerical vector with second random variable e.g. c(3.1, 1.2, 1.93).
 #'
-#' @return A character string, capitalized to title case.
+#' @return 2d matrix of Copula function calculated on a grid
 #' @export
 #'
 #' @examples
@@ -20,12 +20,13 @@ calculate_copula_grid <- function(X, Y) {
 
 #' Calculate copula based on monte carlo samples
 #'
-#' @description Greet a person and appropriately capitalize their name.
+#' @description Calculates copula based on a given sample using bootstrap.
 #'
-#' @param X Your name (character string; e.g. "john doe").
-#' @param Y Your name (character string; e.g. "john doe").
+#' @param X numerical vector with first random variable e.g. c(1.1, 2.2, 1.73).
+#' @param Y numerical vector with second random variable e.g. c(3.1, 1.2, 1.93).
+#' @param MC number of replications e.g. 1000, defaults to 100.
 #'
-#' @return A character string, capitalized to title case.
+#' @return 2d matrix of Copula function calculated on a grid
 #' @export
 #'
 #' @examples

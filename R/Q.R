@@ -13,11 +13,7 @@ Q <- function(Q_grid, C_grid) {
     j <- ceiling(y*(n+1))
 
     return(C_grid[i,j])
-
   }
-
   Q_grid$z <- mapply(get_val, Q_grid$x, Q_grid$y)
-
   return(Q_grid)
-
 }

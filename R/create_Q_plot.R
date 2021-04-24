@@ -1,10 +1,13 @@
 library(ggplot2)
-#' Calculate copula based on monte carlo samples
+#' Plot Q function based on mone carlo estimation
 #'
 #' @description Greet a person and appropriately capitalize their name.
 #'
-#' @param X Your name (character string; e.g. "john doe").
-#' @param Y Your name (character string; e.g. "john doe").
+#' @param X numerical vector with first random variable e.g. c(1.1, 2.2, 1.73).
+#' @param Y numerical vector with second random variable e.g. c(3.1, 1.2, 1.93).
+#' @param k_plot_grid number of grid points for plot e.g. 1000, defaults to 100.
+#' @param MC number of replications e.g. 1000, defaults to 100.
+#' @param print boolean value, if true a plot will be displayed, defaults to TRUE.
 #'
 #' @return A character string, capitalized to title case.
 #' @export
