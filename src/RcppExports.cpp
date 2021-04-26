@@ -42,16 +42,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // arma_copula_mc
-arma::mat arma_copula_mc(arma::vec Rx, arma::vec Ry, int MC, int t);
-RcppExport SEXP _VoA_arma_copula_mc(SEXP RxSEXP, SEXP RySEXP, SEXP MCSEXP, SEXP tSEXP) {
+arma::mat arma_copula_mc(arma::vec Rx, arma::vec Ry, int MC);
+RcppExport SEXP _VoA_arma_copula_mc(SEXP RxSEXP, SEXP RySEXP, SEXP MCSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::vec >::type Rx(RxSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type Ry(RySEXP);
     Rcpp::traits::input_parameter< int >::type MC(MCSEXP);
-    Rcpp::traits::input_parameter< int >::type t(tSEXP);
-    rcpp_result_gen = Rcpp::wrap(arma_copula_mc(Rx, Ry, MC, t));
+    rcpp_result_gen = Rcpp::wrap(arma_copula_mc(Rx, Ry, MC));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -72,7 +71,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_VoA_seq_int", (DL_FUNC) &_VoA_seq_int, 2},
     {"_VoA_rnd_idx", (DL_FUNC) &_VoA_rnd_idx, 1},
     {"_VoA_bootstrap_samples", (DL_FUNC) &_VoA_bootstrap_samples, 2},
-    {"_VoA_arma_copula_mc", (DL_FUNC) &_VoA_arma_copula_mc, 4},
+    {"_VoA_arma_copula_mc", (DL_FUNC) &_VoA_arma_copula_mc, 3},
     {"_VoA_arma_copula", (DL_FUNC) &_VoA_arma_copula, 2},
     {NULL, NULL, 0}
 };

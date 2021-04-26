@@ -13,8 +13,8 @@ bootstrap_samples <- function(n, MC = 100L) {
     .Call(`_VoA_bootstrap_samples`, n, MC)
 }
 
-arma_copula_mc <- function(Rx, Ry, MC = 100L, t = 1L) {
-    .Call(`_VoA_arma_copula_mc`, Rx, Ry, MC, t)
+arma_copula_mc <- function(Rx, Ry, MC = 100L) {
+    .Call(`_VoA_arma_copula_mc`, Rx, Ry, MC)
 }
 
 arma_copula <- function(Rx, Ry) {
