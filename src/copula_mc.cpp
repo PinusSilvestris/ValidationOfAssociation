@@ -3,9 +3,6 @@
 #include "rcpp_copula.h"
 #include <RcppArmadilloExtensions/sample.h>
 
-#if _OPENMP
-  #include <omp.h>
-#endif
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 arma::uvec seq_int(long int a, long int b){
@@ -33,16 +30,12 @@ std::vector<arma::uvec> bootstrap_samples(int n, int MC=100){
 
 
 // [[Rcpp::export()]]
-arma::mat arma_copula_mc(arma::vec Rx, arma::vec Ry, int MC=100, int t=1) {
+arma::mat arma_copula_mc(arma::vec Rx, arma::vec Ry, int MC=100) {
   int n = Rx.size();
   std::vector<arma::uvec> bootstrap_idx = bootstrap_samples(n, MC);
   arma::mat sum = arma::zeros(n+1, n+1);
 
-#if _OPENMP
-  omp_set_num_threads(t) ;
-  #pragma omp parallel for reduction(+:sum)
-#endif
-  for (int b = 0 ; b < MC ; b++) {
+for (int b = 0 ; b < MC ; b++) {
     arma::uvec idx = bootstrap_idx[b];
 
     arma::vec Rx_sample = Rx.elem(idx);
