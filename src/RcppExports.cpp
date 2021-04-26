@@ -55,16 +55,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// omp2
-void omp2(int t);
-RcppExport SEXP _VoA_omp2(SEXP tSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type t(tSEXP);
-    omp2(t);
-    return R_NilValue;
-END_RCPP
-}
 // arma_copula
 arma::mat arma_copula(arma::vec Rx, arma::vec Ry);
 RcppExport SEXP _VoA_arma_copula(SEXP RxSEXP, SEXP RySEXP) {
@@ -83,7 +73,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_VoA_rnd_idx", (DL_FUNC) &_VoA_rnd_idx, 1},
     {"_VoA_bootstrap_samples", (DL_FUNC) &_VoA_bootstrap_samples, 2},
     {"_VoA_arma_copula_mc", (DL_FUNC) &_VoA_arma_copula_mc, 4},
-    {"_VoA_omp2", (DL_FUNC) &_VoA_omp2, 1},
     {"_VoA_arma_copula", (DL_FUNC) &_VoA_arma_copula, 2},
     {NULL, NULL, 0}
 };

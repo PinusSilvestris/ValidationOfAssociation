@@ -17,10 +17,6 @@ arma_copula_mc <- function(Rx, Ry, MC = 100L, t = 1L) {
     .Call(`_VoA_arma_copula_mc`, Rx, Ry, MC, t)
 }
 
-omp2 <- function(t = 1L) {
-    invisible(.Call(`_VoA_omp2`, t))
-}
-
 arma_copula <- function(Rx, Ry) {
     .Call(`_VoA_arma_copula`, Rx, Ry)
 }
