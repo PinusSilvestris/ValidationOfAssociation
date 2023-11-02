@@ -1,7 +1,7 @@
 library(ggplot2)
 #' Plot Q function based on mone carlo estimation
 #'
-#' @description Greet a person and appropriately capitalize their name.
+#' @description
 #'
 #' @param X numerical vector with first random variable e.g. c(1.1, 2.2, 1.73).
 #' @param Y numerical vector with second random variable e.g. c(3.1, 1.2, 1.93).

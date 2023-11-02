@@ -1,4 +1,4 @@
 library(testthat)
-library(ValidationOfAssociation)
+library(VoA)
 
-test_check("ValidationOfAssociation")
+test_check("VoA")

@@ -1,5 +1,5 @@
 library(testthat)
-context("Copula calculations")
+#context("Copula calculations")
 
 test_that("Checking calculated values", {
 
