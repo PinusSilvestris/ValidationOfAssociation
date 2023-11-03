@@ -1,12 +1,3 @@
-if (!require(parallel)) install.packages("parallel")
-library(parallel)
-
-if (!require(pbmcapply)) {
-  install.packages("pbmcapply")
-}
-library(pbmcapply)
-
-
 #' Plot Q function based on mone carlo estimation
 #'
 #' @description Plot Q function based on mone carlo estimation
