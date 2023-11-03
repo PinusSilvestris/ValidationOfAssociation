@@ -21,3 +21,11 @@ arma_copula <- function(Rx, Ry) {
     .Call(`_VoA_arma_copula`, Rx, Ry)
 }
 
+calculate_copula_grid <- function(X, Y) {
+    .Call(`_VoA_calculate_copula_grid`, X, Y)
+}
+
+calculate_copula_mc_grid <- function(X, Y, MC) {
+    .Call(`_VoA_calculate_copula_mc_grid`, X, Y, MC)
+}
+

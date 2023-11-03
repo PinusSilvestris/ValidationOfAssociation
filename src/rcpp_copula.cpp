@@ -1,6 +1,21 @@
 // -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
-
+#include <omp.h>
 #include "rcpp_copula.h"
+#include <iostream>
+#include <atomic>
+#include <chrono>
+#include <thread>
+
+// Simple function to display the progress
+void print_progress(std::atomic<int>& counter, int total) {
+  while (counter < total) {
+    int progress = counter.load();
+    std::cout << "\rProgress: " << progress << "/" << total << " (" << (100 * progress / total) << "%)";
+    std::cout.flush();
+    std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Update every 100ms
+  }
+  std::cout << "\rProgress: " << total << "/" << total << " (100%)\n";
+}
 // [[Rcpp::depends(RcppArmadillo)]]
 
 arma::vec swap_ranks(arma::vec R){
@@ -28,21 +43,15 @@ arma::vec fill_T(arma::vec &Rx, arma::vec &Ry){
 }
 
 void calculate_copula_part(arma::vec &T, arma::mat &C){
+  int n = T.size();
+  double n_inv = 1.0 / n;
+  C.zeros(); // Reset C to zero before reuse
 
-    int n = T.size();
-
-    for (int i = 1; i <= (double)(n + 1) / 2.0; i++)
-    {
-        for (int j = 0; j < T[i - 1] && j <= (double)(n + 1) / 2.0; j++)
-        {
-            C(i, j) = C(i - 1, j);
-        }
-        for (int j = (int)T[i - 1]; j <= (double)(n + 1) / 2.0; j++)
-        {
-            C(i, j) = C(i - 1, j) + 1.0/n;
-        }
+  for (int i = 1; i <= n / 2 + 1; ++i) {
+    for (int j = 0; j <= n / 2 + 1; ++j) {
+      C(i, j) = C(i - 1, j) + (j >= T[i - 1]) * n_inv;
     }
-}
+  }}
 
 void fill_matrix(int n, arma::mat &KS, arma::mat &C, bool x_prim, bool y_prim){
 
@@ -63,7 +72,7 @@ arma::mat arma_copula(arma::vec Rx, arma::vec Ry) {
     int n = Rx.size();
 
     // TODO: decrease memory footprint
-    int k = (int)(1.0*n/2.0);
+    // int k = (int)(1.0*n/2.0);
 
     arma::mat Ctab = arma::zeros(n+1, n+1);
     arma::mat Ctabs22 = arma::zeros(n+1, n+1);
@@ -92,9 +101,6 @@ arma::mat arma_copula(arma::vec Rx, arma::vec Ry) {
     calculate_copula_part(Ts12, Ctabs12);
     calculate_copula_part(Ts21, Ctabs21);
 
-    // calculation of 𝑄𝑛
-    //∗ (function “Wn” defined at the end of this code)
-
     fill_matrix(n, KS, Ctab, false, false);
     fill_matrix(n, KS, Ctabs22, true, true);
     fill_matrix(n, KS, Ctabs12, false, true);
@@ -102,3 +108,39 @@ arma::mat arma_copula(arma::vec Rx, arma::vec Ry) {
 
     return KS;
 }
+
+arma::uvec rank(const arma::vec& da_ta) {
+  return (arma::sort_index(arma::sort_index(da_ta, "ascend")) + 1);
+}
+
+// [[Rcpp::export]]
+arma::mat calculate_copula_grid(const arma::vec X, const arma::vec Y) {
+  arma::vec R = arma::conv_to<arma::vec>::from(rank(X));
+  arma::vec S = arma::conv_to<arma::vec>::from(rank(Y));
+  return arma_copula(R, S);
+}
+
+// [[Rcpp::export]]
+arma::mat calculate_copula_mc_grid(const arma::vec& X, const arma::vec& Y, int MC) {
+  int K = X.n_elem;
+  arma::mat g = arma::zeros<arma::mat>(X.n_elem+1, Y.n_elem+1); // Adjust size as necessary
+
+  std::atomic<int> progress_counter(0);
+  std::thread progress_thread(print_progress, std::ref(progress_counter), MC);
+
+
+#pragma omp parallel for
+  for (int i = 0; i < MC; ++i) {
+    arma::uvec sample_indices = arma::randi<arma::uvec>(K, arma::distr_param(0, K-1));
+    arma::vec X_s = X.elem(sample_indices);
+    arma::vec Y_s = Y.elem(sample_indices);
+    arma::mat mat = calculate_copula_grid(X_s, Y_s);
+    progress_counter++;
+#pragma omp critical
+    g += mat / MC;
+  }
+  progress_thread.join(); // Wait for the progress display to finish
+
+  return g;
+}
+

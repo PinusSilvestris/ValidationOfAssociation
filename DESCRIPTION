@@ -1,7 +1,7 @@
 Package: VoA
 Type: Package
 Title: Quantifying and visualizing associations between two variables
-Version: 0.0.0.1
+Version: 0.0.0.5
 Date: 2021-04-24
 Authors@R: 
     c(person(given = "Bogdan",
@@ -23,7 +23,5 @@ RoxygenNote: 7.1.1
 Suggests: 
     testthat (>= 3.0.0),
     ggplot2,
-    Rcpp,
-    RcppArmadilo
 Config/testthat/edition: 3
 

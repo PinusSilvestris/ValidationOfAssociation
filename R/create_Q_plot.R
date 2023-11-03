@@ -1,4 +1,12 @@
-library(ggplot2)
+if (!require(parallel)) install.packages("parallel")
+library(parallel)
+
+if (!require(pbmcapply)) {
+  install.packages("pbmcapply")
+}
+library(pbmcapply)
+
+
 #' Plot Q function based on mone carlo estimation
 #'
 #' @description
@@ -15,15 +23,19 @@ library(ggplot2)
 #' @examples
 #' 'calculate_copula_mc_grid(c(1, 3, 2), c(3, 2, 1)) '
 create_Q_plot <- function(X, Y, k_plot_grid = 100, MC = 100, print = TRUE){
-  C_grid<- calculate_copula_mc_grid(X, Y, MC)
+  time_taken <- system.time({
+    C_grid<- calculate_copula_mc_grid(X, Y, MC)
 
-  Q_grid <- create_Q_grid(k_plot_grid)
-  plot_points <- Q(Q_grid, C_grid)
-  plot <- ggplot(plot_points, aes(x, y, z = z)) + geom_contour_filled()
+    Q_grid <- create_Q_grid(k_plot_grid)
+    plot_points <- Q(Q_grid, C_grid)
+    plot <- ggplot(plot_points, aes(x, y, z = z)) + geom_contour_filled()
 
-  if(print) {
-    print(plot)
-  }
+    if(print) {
+      print(plot)
+    }
+  })[3]
 
-  return(plot)
+  cat("Time taken for calculations:", time_taken, "seconds\n")
+
+  return(list(Q_plot = plot, C_grid = C_grid, Q_grid = Q_grid, plot_points = plot_points))
 }

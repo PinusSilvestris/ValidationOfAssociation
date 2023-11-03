@@ -71,6 +71,31 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// calculate_copula_grid
+arma::mat calculate_copula_grid(const arma::vec X, const arma::vec Y);
+RcppExport SEXP _VoA_calculate_copula_grid(SEXP XSEXP, SEXP YSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec >::type Y(YSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_copula_grid(X, Y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// calculate_copula_mc_grid
+arma::mat calculate_copula_mc_grid(const arma::vec& X, const arma::vec& Y, int MC);
+RcppExport SEXP _VoA_calculate_copula_mc_grid(SEXP XSEXP, SEXP YSEXP, SEXP MCSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< int >::type MC(MCSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_copula_mc_grid(X, Y, MC));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_VoA_seq_int", (DL_FUNC) &_VoA_seq_int, 2},
@@ -78,6 +103,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_VoA_bootstrap_samples", (DL_FUNC) &_VoA_bootstrap_samples, 2},
     {"_VoA_arma_copula_mc", (DL_FUNC) &_VoA_arma_copula_mc, 3},
     {"_VoA_arma_copula", (DL_FUNC) &_VoA_arma_copula, 2},
+    {"_VoA_calculate_copula_grid", (DL_FUNC) &_VoA_calculate_copula_grid, 2},
+    {"_VoA_calculate_copula_mc_grid", (DL_FUNC) &_VoA_calculate_copula_mc_grid, 3},
     {NULL, NULL, 0}
 };
 
