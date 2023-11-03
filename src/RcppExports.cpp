@@ -11,6 +11,29 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// create_Q_grid
+arma::mat create_Q_grid(int n);
+RcppExport SEXP _VoA_create_Q_grid(SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(create_Q_grid(n));
+    return rcpp_result_gen;
+END_RCPP
+}
+// Q
+Rcpp::DataFrame Q(const arma::mat& Q_grid, const arma::mat& C_grid);
+RcppExport SEXP _VoA_Q(SEXP Q_gridSEXP, SEXP C_gridSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Q_grid(Q_gridSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type C_grid(C_gridSEXP);
+    rcpp_result_gen = Rcpp::wrap(Q(Q_grid, C_grid));
+    return rcpp_result_gen;
+END_RCPP
+}
 // seq_int
 arma::uvec seq_int(long int a, long int b);
 RcppExport SEXP _VoA_seq_int(SEXP aSEXP, SEXP bSEXP) {
@@ -98,6 +121,8 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_VoA_create_Q_grid", (DL_FUNC) &_VoA_create_Q_grid, 1},
+    {"_VoA_Q", (DL_FUNC) &_VoA_Q, 2},
     {"_VoA_seq_int", (DL_FUNC) &_VoA_seq_int, 2},
     {"_VoA_rnd_idx", (DL_FUNC) &_VoA_rnd_idx, 1},
     {"_VoA_bootstrap_samples", (DL_FUNC) &_VoA_bootstrap_samples, 2},
