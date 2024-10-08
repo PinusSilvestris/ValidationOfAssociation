@@ -14,7 +14,14 @@
 #' @examples
 #' 'calculate_copula_mc_grid(c(1, 3, 2), c(3, 2, 1)) '
 create_Q_plot <- function(X, Y, k_plot_grid = 100, MC = 100, print = TRUE){
+
+  if(length(X) != length(Y)){
+    stop("Size of X and Y do not match");
+
+  }
+
   time_taken <- system.time({
+
     C_grid<- calculate_copula_mc_grid(X, Y, MC)
 
     Q_grid <- create_Q_grid(k_plot_grid)

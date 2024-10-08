@@ -57,6 +57,7 @@ void fill_matrix(int n, arma::mat &KS, arma::mat &C, bool x_prim, bool y_prim){
 
     int sign = pow(-1, x_prim+y_prim);
 
+    //Rcpp::Rcout<<"x_prim: "<<x_prim<<" y_prim"<<y_prim<<std::endl;
     for (int i = 0; i <= (double)(n + 1) / 2.0; i++)
     {
         for (int j = 0; j <= (double)(n + 1) / 2.0; j++)
@@ -64,13 +65,13 @@ void fill_matrix(int n, arma::mat &KS, arma::mat &C, bool x_prim, bool y_prim){
             int x = x_prim ? n-i : i;
             int y = y_prim ? n-j : j;
             KS(x, y) = sign*Wn(n, C(i, j), i, j);
+            //Rcpp::Rcout<<"i: "<<i<<" j:"<<" x:"<<x<<" y:"<<y<<" sign:"<<sign<<" Wn:"<<Wn(n, C(i, j), i, j)<<std::endl;
         }
     }}
 
 // [[Rcpp::export]]
 arma::mat arma_copula(arma::vec Rx, arma::vec Ry) {
     int n = Rx.size();
-
     // TODO: decrease memory footprint
     // int k = (int)(1.0*n/2.0);
 
@@ -124,10 +125,13 @@ arma::mat calculate_copula_grid(const arma::vec X, const arma::vec Y) {
 arma::mat calculate_copula_mc_grid(const arma::vec& X, const arma::vec& Y, int MC) {
   int K = X.n_elem;
   arma::mat g = arma::zeros<arma::mat>(X.n_elem+1, Y.n_elem+1); // Adjust size as necessary
-
   std::atomic<int> progress_counter(0);
   std::thread progress_thread(print_progress, std::ref(progress_counter), MC);
 
+  if(X.size() != Y.size()){
+    std::cout<<"Size of X and Y do not match";
+    throw std::invalid_argument( "Size of X and Y do not match" );
+  }
 
 #pragma omp parallel for
   for (int i = 0; i < MC; ++i) {
@@ -136,7 +140,7 @@ arma::mat calculate_copula_mc_grid(const arma::vec& X, const arma::vec& Y, int M
     arma::vec Y_s = Y.elem(sample_indices);
     arma::mat mat = calculate_copula_grid(X_s, Y_s);
     progress_counter++;
-#pragma omp critical
+//#pragma omp critical
     g += mat / MC;
   }
   progress_thread.join(); // Wait for the progress display to finish
