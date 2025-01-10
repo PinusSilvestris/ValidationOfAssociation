@@ -83,25 +83,25 @@ BEGIN_RCPP
 END_RCPP
 }
 // arma_copula
-arma::mat arma_copula(const arma::vec& Rx, const arma::vec& Ry);
+arma::mat arma_copula(arma::vec Rx, arma::vec Ry);
 RcppExport SEXP _VoA_arma_copula(SEXP RxSEXP, SEXP RySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::vec& >::type Rx(RxSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type Ry(RySEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type Rx(RxSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type Ry(RySEXP);
     rcpp_result_gen = Rcpp::wrap(arma_copula(Rx, Ry));
     return rcpp_result_gen;
 END_RCPP
 }
 // calculate_copula_grid
-arma::mat calculate_copula_grid(const arma::vec& X, const arma::vec& Y);
+arma::mat calculate_copula_grid(const arma::vec X, const arma::vec Y);
 RcppExport SEXP _VoA_calculate_copula_grid(SEXP XSEXP, SEXP YSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::vec& >::type X(XSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const arma::vec >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec >::type Y(YSEXP);
     rcpp_result_gen = Rcpp::wrap(calculate_copula_grid(X, Y));
     return rcpp_result_gen;
 END_RCPP
